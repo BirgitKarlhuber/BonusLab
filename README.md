@@ -3,7 +3,7 @@
 # Installation
 
 ```
-devtools::install_github("BirgitKarlhuber/BonusLab", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+devtools::install_github("BirgitKarlhuber/BonusLab", build_opts = c("--no-manual"), build_vignettes = TRUE)
 library(ggplot2)
 library(BonusLab)
 browseVignettes("BonusLab")
