@@ -15,14 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-# install.packages("caret")
-# install.packages("mlbench")
 
 library(BonusLab)
-library(mlbench)
-library(MASS)
-library(tidyverse)
-library(caret)
+# library(mlbench)
+# library(MASS)
+# library(tidyverse)
+# library(caret)
 
 ridgereg <- getFromNamespace("ridgereg", "BonusLab")
 
@@ -36,9 +34,9 @@ Use the caret package and the 'ridgereg()' function to create a predictive model
 Divide the BostonHousing data into a test and training dataset using the caret package.
 ```{r}
 
-data("BostonHousing")
+data(BostonHousing, package="mlbench")
 
-train_indices <- createDataPartition(BostonHousing$crim, times = 1, p = 0.8, list = FALSE, groups = 2)
+train_indices <- caret::createDataPartition(BostonHousing$crim, times = 1, p = 0.8, list = FALSE, groups = 2)
 
 # create training set
 train_data <- BostonHousing[train_indices,]
@@ -60,7 +58,7 @@ summary(saturated_model)
 # Fit a linear regression model with forward selection on the training dataset
 null_model <- lm(medv ~ 1, data = train_data)
 
-lm_forward_model <- stepAIC(null_model, direction = "forward",
+lm_forward_model <- MASS::stepAIC(null_model, direction = "forward",
                             scope = list(lower = null_model, 
                                          upper = saturated_model), trace = FALSE)
 summary(lm_forward_model)

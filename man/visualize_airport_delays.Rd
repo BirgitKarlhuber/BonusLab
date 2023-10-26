@@ -13,7 +13,6 @@ Returns a plot
 This function creates a plot that visualizes the mean delay of  fights for different airports by longitude and latitude
 }
 \examples{
-data("iris")
 library(BonusLab)
-plot <- visualize_airport_delays()
+plot <- BonusLab::visualize_airport_delays()
 }

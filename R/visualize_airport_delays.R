@@ -2,30 +2,30 @@
 #' 
 #' This function creates a plot that visualizes the mean delay of  fights for different airports by longitude and latitude
 #'
+#' @name visualize_airport_delays
+#'
 #' @return Returns a plot
 #'
 #' @export
 #' 
-#' @importFrom ggplot2 ggplot
-#' @import dplyr
+#' @import nycflights13
+#' @import dplyr 
 #' 
 #' @examples
-#' data("iris")
 #' library(BonusLab)
-#' plot <- visualize_airport_delays()
-
+#' plot <- BonusLab::visualize_airport_delays()
 
 visualize_airport_delays <- function(){
   
-  data("flights", package="nycflights13")
-  data("airports", package="nycflights13")
+  data(flights, package="nycflights13", envir = environment())
+  data(airports, package="nycflights13", envir = environment())
   
   # plot 1 - arrival delays
   # join the flights and airports dataset on the destination airport code
   airport_arr_delays <- flights %>%
-    left_join(airports, by = c("dest" = "faa")) %>%
-    group_by(dest) %>%
-    summarise(mean_delay = mean(arr_delay, na.rm = TRUE),
+    dplyr::left_join(airports, by = c("dest" = "faa")) %>%
+    dplyr::group_by(dest) %>%
+    dplyr::summarise(mean_delay = mean(arr_delay, na.rm = TRUE),
               lat = mean(lat, na.rm = TRUE),
               lon = mean(lon, na.rm = TRUE))
   
@@ -43,9 +43,9 @@ visualize_airport_delays <- function(){
   # plot 2 - departure delays
   # join the flights and airports dataset on the destination airport code
   airport_dep_delays <- flights %>%
-    left_join(airports, by = c("dest" = "faa")) %>%
-    group_by(dest) %>%
-    summarise(mean_delay = mean(dep_delay, na.rm = TRUE),
+    dplyr::left_join(airports, by = c("dest" = "faa")) %>%
+    dplyr::group_by(dest) %>%
+    dplyr::summarise(mean_delay = mean(dep_delay, na.rm = TRUE),
               lat = mean(lat, na.rm = TRUE),
               lon = mean(lon, na.rm = TRUE))
   
@@ -61,5 +61,3 @@ visualize_airport_delays <- function(){
   
   return(list(plot1,plot2))
 }
-
-# visualize_airport_delays()
