@@ -117,6 +117,8 @@ for(lambda in seq(0,0.1, by=0.01)){
 
 cv_err # lambda = 0.02 is best
 
+
+
 ```
 
 

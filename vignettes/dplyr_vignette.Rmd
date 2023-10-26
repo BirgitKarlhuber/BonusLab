@@ -29,7 +29,7 @@ This R function creates two plots which visualizes the mean delay (departure and
 We use the function 'visualize_airport_delays' to create the plots. 
 ```{r}
 
-plot <- BonusLab::visualize_airport_delays()
+BonusLab::visualize_airport_delays()
 
 ```
 
