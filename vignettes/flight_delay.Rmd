@@ -1,0 +1,130 @@
+---
+title: "flight_delay"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{flight_delay}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(BonusLab)
+library(nycflights13)
+library(dplyr)
+```
+
+
+1. Read in the weather dataset and the flights dataset from the nycflights13 package and remove eventual variables you do not believe to have a predictive value.
+```{r}
+data("flights")
+data("weather")
+
+# remove variables
+flights <- as.data.frame(flights)
+flights <- flights[,c(6,9,13,16,19)]
+
+weather <- as.data.frame(weather)
+weather <- weather[,c(1,6,7,8,9,12,14,15)]
+
+# str(flights)
+
+```
+
+
+2. Add extra weather data from the weather dataset and create interaction effects you think could be of interest for the prediction.
+```{r}
+
+data_flights_weather <- flights %>%
+    left_join(weather, by = c("time_hour" = "time_hour", "origin" = "origin"))
+data_flights_weather <- data_flights_weather[,-c(3,5)]
+
+
+# create interaction effects - might be interesting for prediction
+
+# arr_delay
+data_arr <- data_flights_weather[!is.na(data_flights_weather$arr_delay),]
+data_arr <- data_arr[,-1]
+data_arr <- na.omit(data_arr)
+
+null_model <- lm(arr_delay ~ 1, data = data_arr)
+saturated_model <- lm(arr_delay ~ .^2, data = data_arr)
+
+# best_model <- stepAIC(null_model, direction = "both",
+#                             scope = list(lower = null_model, 
+#                                          upper = saturated_model), trace = FALSE)
+# summary(best_model)
+
+# visib:temp + humid:temp + 
+# humid:distance + distance:temp
+
+
+# dep_delay
+data_dep <- data_flights_weather[!is.na(data_flights_weather$dep_delay),]
+data_dep <- data_dep[,-2]
+data_dep <- na.omit(data_dep)
+
+null_model <- lm(dep_delay ~ 1, data = data_dep)
+saturated_model <- lm(dep_delay ~ .^2, data = data_dep)
+
+# best_model <- stepAIC(null_model, direction = "both",
+#                             scope = list(lower = null_model, 
+#                                          upper = saturated_model), trace = FALSE)
+# summary(best_model)
+
+```
+
+
+
+3. Use the caret package to divide the flight dataset into three sets: test, train and validation (with the proportions 5%, 80% and 15%.
+```{r}
+
+# train_indices <- createDataPartition(data_flights_weather$arr_delay, times = 1, 
+#                                      p = 0.8, list = FALSE, groups = 2)
+# 
+# # create training set
+# train_data <- data_flights_weather[train_indices,]
+# 
+# 
+# remaining_data <- data_flights_weather[-train_indices,]
+# 
+# validation_indices <- createDataPartition(remaining_data$month,
+#                                           times = 1, p = 0.75, list = FALSE, groups = 2)
+# 
+# # create validation set
+# validation_data  <- remaining_data[validation_indices,]
+# 
+# # create test set
+# test_data <- remaining_data[-validation_indices,]
+
+```
+
+
+4. Train ridge regressions models for different values of lambda and evaluate the root mean squared error (see here https://heuristically.wordpress.com/2013/07/12/calculate-rmse-and-mae-in-r-and-sas/)
+on the validation set. Try to find an optimal value for lambda.
+```{r}
+
+
+
+
+```
+
+
+5. When you found a good value for lambda, use this to predict the test set and report the RMSE of your predicted model.
+```{r}
+
+
+
+
+```
+
+
+
+
+

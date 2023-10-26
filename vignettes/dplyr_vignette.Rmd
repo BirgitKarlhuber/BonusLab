@@ -1,0 +1,35 @@
+---
+title: "dplyr_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{dplyr_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(BonusLab)
+library(dplyr)
+library(ggplot2)
+library(nycflights13)
+```
+
+Most of this information is available scattered throughout the R documentation. This appendix brings it all together in one place. 
+
+This R function creates two plots which visualizes the mean delay (departure and arrival) of flights for different airports by longitude and latitude using ggplot2.
+
+## simple example
+We use the function 'visualize_airport_delays' to create the plots. 
+```{r}
+
+visualize_airport_delays()
+
+```
+

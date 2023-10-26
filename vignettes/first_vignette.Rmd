@@ -17,11 +17,12 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(BonusLab)
 library(ggplot2)
+
 ```
 
 Most of this information is available scattered throughout the R documentation. This appendix brings it all together in one place. 
 
-This R package is created to handle linear regression models. With the [linreg] package a linear regression model is created. The function takes two arguments formula and data and returns an object of class [linreg]. Special functions such as `print()`,`plot()`,`resid()`, `pred()`,`coef()` and `summary()` can be used to get more information about the linear regression model. 
+This R function is created to handle linear regression models. With the [linreg] package a linear regression model is created. The function takes two arguments formula and data and returns an object of class [linreg]. Special functions such as `print()`,`plot()`,`resid()`, `pred()`,`coef()` and `summary()` can be used to get more information about the linear regression model. 
 
 
 

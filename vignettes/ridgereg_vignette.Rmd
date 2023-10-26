@@ -1,0 +1,63 @@
+---
+title: "ridgereg_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ridgereg_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(BonusLab)
+```
+
+Most of this information is available scattered throughout the R documentation. This appendix brings it all together in one place. 
+
+This R function is created to handle linear regression models. With the [ridgereg] package a ridge regression model is created. The function takes three arguments formula, data and lambda and returns an object of class [ridgereg]. Special functions such as `print()`, `pred()` and `coef()` can be used to get more information about the model. 
+
+## simple example
+We'll start by creating a simple ridge regression model. 
+
+### load data
+First load the data you want to analyse. In this vignette the well known dataset `iris` is used for demonstration. 
+```{r}
+data("iris")
+```
+
+
+### create linear regression model
+In the next step we call our class [ridgereg] with the arguments formula = Petal.Length~Sepal.Width+Sepal.Length, data = iris and lambda = 0.01. We save the returned ridgereg-object in the variable mod_object. 
+```{r}
+ridgereg <- getFromNamespace("ridgereg", "BonusLab")
+mod_object <- ridgereg(Petal.Length~Sepal.Width+Sepal.Length, data = iris, lambda = 0.01)
+```
+
+# use functions
+In the next step we can now use the different functions to get a better insight into our ridge regression model. 
+
+1. `$print()`
+The `$print()` functions gives us the coefficients and coefficient names of our model. 
+```{r}
+mod_object$print()
+```
+
+2. `$pred()`
+The `$pred()` functions gives us the predicted response values (\hat{y}) of the model. 
+```{r}
+mod_object$pred()
+```
+
+
+3. `$coef()`
+The `$coef()` functions gives us the coefficients of the model as a names vector. 
+```{r}
+mod_object$coef()
+```
+
