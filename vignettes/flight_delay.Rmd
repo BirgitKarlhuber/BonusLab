@@ -26,14 +26,15 @@ ridgereg <- getFromNamespace("ridgereg", "BonusLab")
 1. Read in the weather dataset and the flights dataset from the nycflights13 package and remove eventual variables you do not believe to have a predictive value.
 ```{r}
 
+data(flights, package="nycflights13", envir = environment())
+data(weather, package="nycflights13", envir = environment())
+
 # remove variables
 flights <- as.data.frame(flights)
 flights <- flights[,c(6,9,13,16,19)]
 
 weather <- as.data.frame(weather)
 weather <- weather[,c(1,6,7,8,9,12,14,15)]
-
-# str(flights)
 
 ```
 
@@ -56,7 +57,8 @@ data_arr <- na.omit(data_arr)
 null_model <- lm(arr_delay ~ 1, data = data_arr)
 saturated_model <- lm(arr_delay ~ .^2, data = data_arr)
 
-# best_model <- stepAIC(null_model, direction = "both",
+## takes very long to run
+# best_model <- MASS::stepAIC(null_model, direction = "both",
 #                             scope = list(lower = null_model, 
 #                                          upper = saturated_model), trace = FALSE)
 # summary(best_model)
@@ -73,10 +75,14 @@ data_dep <- na.omit(data_dep)
 null_model <- lm(dep_delay ~ 1, data = data_dep)
 saturated_model <- lm(dep_delay ~ .^2, data = data_dep)
 
-# best_model <- stepAIC(null_model, direction = "both",
-#                             scope = list(lower = null_model, 
+## takes very long to run
+# best_model <- MASS::stepAIC(null_model, direction = "both",
+#                             scope = list(lower = null_model,
 #                                          upper = saturated_model), trace = FALSE)
 # summary(best_model)
+
+# humid:precip, dewp:distance
+# precip:visib, precip:dewp 
 
 ```
 
@@ -85,23 +91,47 @@ saturated_model <- lm(dep_delay ~ .^2, data = data_dep)
 3. Use the caret package to divide the flight dataset into three sets: test, train and validation (with the proportions 5%, 80% and 15%.
 ```{r}
 
-# train_indices <- createDataPartition(data_flights_weather$arr_delay, times = 1, 
-#                                      p = 0.8, list = FALSE, groups = 2)
-# 
-# # create training set
-# train_data <- data_flights_weather[train_indices,]
-# 
-# 
-# remaining_data <- data_flights_weather[-train_indices,]
-# 
-# validation_indices <- createDataPartition(remaining_data$month,
-#                                           times = 1, p = 0.75, list = FALSE, groups = 2)
-# 
-# # create validation set
-# validation_data  <- remaining_data[validation_indices,]
-# 
-# # create test set
-# test_data <- remaining_data[-validation_indices,]
+## arr_delay
+train_indices <- caret::createDataPartition(data_arr$arr_delay, times = 1,
+                                     p = 0.8, list = FALSE, groups = 2)
+
+# create training set
+train_data_arr <- data_arr[train_indices,]
+
+
+remaining_data <- data_arr[-train_indices,]
+
+validation_indices <- caret::createDataPartition(remaining_data$arr_delay,
+                                          times = 1, p = 0.75, list = FALSE, groups = 2)
+
+# create validation set
+validation_data_arr  <- remaining_data[validation_indices,]
+
+# create test set
+test_data_arr <- remaining_data[-validation_indices,]
+
+```
+
+```{r}
+
+## dep_delay
+train_indices <- caret::createDataPartition(data_dep$dep_delay, times = 1,
+                                     p = 0.8, list = FALSE, groups = 2)
+
+# create training set
+train_data_dep <- data_dep[train_indices,]
+
+
+remaining_data <- data_dep[-train_indices,]
+
+validation_indices <- caret::createDataPartition(remaining_data$dep_delay,
+                                          times = 1, p = 0.75, list = FALSE, groups = 2)
+
+# create validation set
+validation_data_dep  <- remaining_data[validation_indices,]
+
+# create test set
+test_data_dep <- remaining_data[-validation_indices,]
 
 ```
 
@@ -110,7 +140,7 @@ saturated_model <- lm(dep_delay ~ .^2, data = data_dep)
 on the validation set. Try to find an optimal value for lambda.
 ```{r}
 
-
+# didn't had enough time for that
 
 
 ```
@@ -119,6 +149,7 @@ on the validation set. Try to find an optimal value for lambda.
 5. When you found a good value for lambda, use this to predict the test set and report the RMSE of your predicted model.
 ```{r}
 
+# didn't had enough time for that
 
 
 

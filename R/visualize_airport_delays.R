@@ -15,11 +15,12 @@
 #' library(BonusLab)
 #' plot <- BonusLab::visualize_airport_delays()
 
+
 visualize_airport_delays <- function(){
   
   data(flights, package="nycflights13", envir = environment())
   data(airports, package="nycflights13", envir = environment())
-  
+
   # plot 1 - arrival delays
   # join the flights and airports dataset on the destination airport code
   airport_arr_delays <- flights %>%
@@ -61,3 +62,7 @@ visualize_airport_delays <- function(){
   
   return(list(plot1,plot2))
 }
+
+# devtools::install_github("BirgitKarlhuber/BonusLab", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+
+
