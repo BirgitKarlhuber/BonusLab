@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 library(BonusLab)
 library(nycflights13)
 library(dplyr)
+
+ridgereg <- getFromNamespace("ridgereg", "BonusLab")
 ```
 
 

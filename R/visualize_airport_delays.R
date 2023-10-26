@@ -8,7 +8,6 @@
 #' 
 #' @importFrom ggplot2 ggplot
 #' @import dplyr
-#' @import nycflights13
 #' 
 #' @examples
 #' data("iris")
